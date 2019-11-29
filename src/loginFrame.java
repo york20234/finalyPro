@@ -1,7 +1,11 @@
+import javafx.scene.input.KeyCode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class loginFrame extends JFrame {
     private Container cp;
@@ -28,15 +32,31 @@ public class loginFrame extends JFrame {
        cp.add(score);
        cp.add(exit);
 
+
+
        logon.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
                gameFrame gf = new gameFrame();
                gf.setVisible(true);
-
+               loginFrame.this.dispose();
 
            }
        });
+       score.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               scoreFrame sf = new scoreFrame();
+               sf.setVisible(true);
+           }
+       });
+       exit.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               System.exit(0);
+           }
+       });
+
 
     }
 }
