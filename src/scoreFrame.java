@@ -6,11 +6,16 @@ import java.awt.event.ActionListener;
 public class scoreFrame extends JFrame {
     private Container cp;
 
+
     private JLabel rank = new JLabel("Rank");
     private JLabel name = new JLabel("Name");
     private JLabel score = new JLabel("Score");
     private JButton exit = new JButton("Exit");
     private JPanel jpn = new JPanel(new GridLayout(1,7,2,2));
+
+    private JTextArea jta = new JTextArea();
+    private JPanel jpn1 = new JPanel();
+
     public scoreFrame(){
         init();
     }
@@ -21,11 +26,14 @@ public class scoreFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         cp.add(jpn,BorderLayout.NORTH);
+        cp.add(jpn1,BorderLayout.CENTER);
 
         jpn.add(rank);
         jpn.add(name);
         jpn.add(score);
         jpn.add(exit);
+
+        jpn1.add(jta);
 
         exit.addActionListener(new ActionListener() {
             @Override

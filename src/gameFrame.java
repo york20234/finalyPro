@@ -6,14 +6,15 @@ import java.util.Random;
 public class gameFrame extends JFrame {
     private Container cp;
     private Random rand = new Random();
-    private Timer timer;
+    private Timer timer,time2;
     private boolean judge =false;
     private int count=0;
+    private int min =60;
 
     private JLabel score = new JLabel("Score:");
     private JLabel score1 = new JLabel(Integer.toString(count));
     private JLabel time = new JLabel("Time:");
-    private JLabel time1 = new JLabel("60");
+    private JLabel time1 = new JLabel(Integer.toString(min));
     private JButton start = new JButton("Start");
     private JButton exit = new JButton("Exit");
     private JPanel jpn = new JPanel(new GridLayout(1,8,2,2));
@@ -43,7 +44,7 @@ public class gameFrame extends JFrame {
     public void init(){
         cp=this.getContentPane();
         this.setLayout(new BorderLayout(3,3));
-        this.setBounds(100,100,600,800);
+        this.setBounds(100,100,600,850);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         cp.add(jpn,BorderLayout.NORTH);
@@ -70,8 +71,8 @@ public class gameFrame extends JFrame {
 
         jlb.setIcon(img);
         jlb.setBounds(ballX,ballY,img.getIconWidth(),img.getIconHeight());
-        right.setBounds(480,700,100,30);
-        left.setBounds(0,700,100,30);
+        right.setBounds(480,710,100,50);
+        left.setBounds(0,710,100,50);
 
         jpn.add(score);
         jpn.add(score1);
@@ -86,23 +87,36 @@ public class gameFrame extends JFrame {
         jpn1.add(right);
         jpn1.add(left);
 
+        time2 = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             min--;
+             time1.setText(Integer.toString(min));
+            }
+        });
 
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                ballX=ballX+speedx;
                ballY=ballY+speedy;
+               //撞到左右牆壁反彈
                 if(ballX<0||ballX>430){
                     speedx=-speedx;
                 }
-               if(ballY>=jlbplay_y-30&&(ballX < jlbplay_x || ballX > jlbplay_x+(jlbplay.getWidth()-5))){
+                //判斷是否為輸，分別是超過球拍時、及球拍左右兩側、當時間到時也判斷為輸
+               if(ballY>=jlbplay_y-20&&(ballX < jlbplay_x || ballX > jlbplay_x+(jlbplay.getWidth()-5))||min==0){
                    judge=true;
                    timer.stop();
-                   JOptionPane.showMessageDialog(gameFrame.this,"your lose");
+                   time2.stop();
+                   JOptionPane.showMessageDialog(gameFrame.this,"Your Lose" +"\n"+
+                           "所得分數:"+count+"\n"+"時間:"+min);
                    gameFrame.this.dispose();
                    loginFrame lg = new loginFrame();
                    lg.setVisible(true);
-               }else if ((ballY>=jlbplay_y-bellSize&&ballX<=jlbplay_x+jlbplay.getWidth()&&ballX>=jlbplay_x)||ballY<=0)
+               }
+               //當球碰到球拍時，所做的加分
+               else if ((ballY>=jlbplay_y-bellSize&&ballX<=jlbplay_x+jlbplay.getWidth()&&ballX>=jlbplay_x)||ballY<=0)
                {
                   if(ballY>=jlbplay_y-bellSize) {
                       count=count+100;
@@ -142,6 +156,7 @@ public class gameFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 timer.start();
+                time2.start();
             }
         });
         exit.addActionListener(new ActionListener() {
@@ -151,5 +166,8 @@ public class gameFrame extends JFrame {
                     }
                 });
 
+    }
+    public void getCount(int n){
+        n=count;
     }
 }

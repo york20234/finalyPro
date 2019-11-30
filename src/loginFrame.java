@@ -9,7 +9,8 @@ import java.awt.event.KeyEvent;
 
 public class loginFrame extends JFrame {
     private Container cp;
-    private JButton logon = new JButton("login");
+
+    private JButton logon = new JButton("Start");
     private JButton score = new JButton("Score");
     private JButton exit = new JButton("Exit");
 
@@ -46,8 +47,8 @@ public class loginFrame extends JFrame {
        score.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               scoreFrame sf = new scoreFrame();
-               sf.setVisible(true);
+              scoreFrame sf = new scoreFrame();
+              sf.setVisible(true);
            }
        });
        exit.addActionListener(new ActionListener() {
