@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class gameFrame extends JFrame {
+public class gameFrame extends JFrame implements KeyListener{
     private Container cp;
     private Random rand = new Random();
     private Timer timer,time2;
@@ -25,11 +25,9 @@ public class gameFrame extends JFrame {
     private JLabel jlbplay = new JLabel();
     private JPanel jpn1 = new JPanel(null);
 
-    private JButton right = new JButton("Right");
-    private JButton left = new JButton("Left");
 
     private int jlbplay_x = 200;
-    private int jlbplay_y = 650;
+    private int jlbplay_y = 700;
 
     private int bellSize=100;
     private int speedy=50;
@@ -44,8 +42,12 @@ public class gameFrame extends JFrame {
     public void init(){
         cp=this.getContentPane();
         this.setLayout(new BorderLayout(3,3));
-        this.setBounds(100,100,600,850);
+        this.setBounds(100,100,600,800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(true);
 
         cp.add(jpn,BorderLayout.NORTH);
         cp.add(jpn1,BorderLayout.CENTER);
@@ -71,8 +73,7 @@ public class gameFrame extends JFrame {
 
         jlb.setIcon(img);
         jlb.setBounds(ballX,ballY,img.getIconWidth(),img.getIconHeight());
-        right.setBounds(480,710,100,50);
-        left.setBounds(0,710,100,50);
+
 
         jpn.add(score);
         jpn.add(score1);
@@ -84,8 +85,7 @@ public class gameFrame extends JFrame {
 
         jpn1.add(jlbplay);
         jpn1.add(jlb);
-        jpn1.add(right);
-        jpn1.add(left);
+
 
         time2 = new Timer(1000, new ActionListener() {
             @Override
@@ -105,7 +105,7 @@ public class gameFrame extends JFrame {
                     speedx=-speedx;
                 }
                 //判斷是否為輸，分別是超過球拍時、及球拍左右兩側、當時間到時也判斷為輸
-               if(ballY>=jlbplay_y-20&&(ballX < jlbplay_x || ballX > jlbplay_x+(jlbplay.getWidth()-5))||min==0){
+               if(ballY>=jlbplay_y-5&&(ballX < jlbplay_x || ballX > jlbplay_x+(jlbplay.getWidth()-5))||min==0){
                    judge=true;
                    timer.stop();
                    time2.stop();
@@ -126,28 +126,11 @@ public class gameFrame extends JFrame {
                }
 
                jlb.setLocation(ballX,ballY);
+               switch (min){
+                   case 55:
+                       break;
+               }
 
-            }
-        });
-
-
-
-        right.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (jlbplay_x<430) {
-                    jlbplay_x = jlbplay_x + 40;
-                    jlbplay.setLocation(jlbplay_x, jlbplay_y);
-                }
-            }
-        });
-        left.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(jlbplay_x>0){
-                jlbplay_x=jlbplay_x-40;
-                jlbplay.setLocation(jlbplay_x,jlbplay_y);
-              }
             }
         });
 
@@ -157,6 +140,7 @@ public class gameFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 timer.start();
                 time2.start();
+
             }
         });
         exit.addActionListener(new ActionListener() {
@@ -165,6 +149,29 @@ public class gameFrame extends JFrame {
                         System.exit(0);
                     }
                 });
+
+    }
+    public void keyPressed(KeyEvent ke){
+        System.out.println(ke.getKeyCode());
+        switch (ke.getKeyCode()){
+            case 37://left
+                if(jlbplay_x>0){
+                    jlbplay_x=jlbplay_x-40;
+                    jlbplay.setLocation(jlbplay_x,jlbplay_y);
+                }
+                break;
+            case 39://right
+                if (jlbplay_x<430) {
+                    jlbplay_x = jlbplay_x + 40;
+                    jlbplay.setLocation(jlbplay_x, jlbplay_y);
+                }
+                break;
+        }
+    }
+    public void keyReleased(KeyEvent ke){
+
+    }
+    public void keyTyped(KeyEvent ke){
 
     }
     public void getCount(int n){
