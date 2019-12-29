@@ -11,8 +11,10 @@ public class loginFrame extends JFrame {
     private Container cp;
 
     private JButton logon = new JButton("Start");
-    private JButton score = new JButton("ExRate");
+    private JButton score = new JButton("Score");
     private JButton exit = new JButton("Exit");
+
+    private gameFrame gf=new gameFrame();
 
 
     public loginFrame(){
@@ -47,10 +49,11 @@ public class loginFrame extends JFrame {
        score.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-              scoreFrame sf = new scoreFrame();
-              sf.setVisible(true);
+               scoreFrame sf =new scoreFrame(gf);
+               sf.setVisible(true);
            }
        });
+
        exit.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
