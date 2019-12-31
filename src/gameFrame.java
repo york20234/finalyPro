@@ -8,7 +8,7 @@ public class gameFrame extends JFrame implements KeyListener{
     private Random rand = new Random();
     private Timer timer,time2;
     private boolean judge =false;
-    private int count=0;
+    private int count;
     private int min =60;
 
     private JLabel score = new JLabel("Score:");
@@ -19,7 +19,7 @@ public class gameFrame extends JFrame implements KeyListener{
     private JButton exit = new JButton("Exit");
     private JPanel jpn = new JPanel(new GridLayout(1,8,2,2));
 
-    private ImageIcon img = new ImageIcon("59040f3fc49fd.png");
+    private ImageIcon img = new ImageIcon("pokeball.png");
     private JLabel jlb = new JLabel();
 
     private JLabel jlbplay = new JLabel();
@@ -35,15 +35,21 @@ public class gameFrame extends JFrame implements KeyListener{
     private int speedx=(int)(rate*speedy);
     private int ballX=rand.nextInt(400);
     private int ballY=1;
+    private scoreFrame scoreFram;
+
 
     public gameFrame(){
+     //   scoreFram=sf;
         init();
     }
     public void init(){
         cp=this.getContentPane();
+        this.pack();
         this.setLayout(new BorderLayout(3,3));
         this.setBounds(100,100,600,800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setTitle("Pinball Game");
 
         addKeyListener(this);
         setFocusable(true);
@@ -51,6 +57,7 @@ public class gameFrame extends JFrame implements KeyListener{
 
         cp.add(jpn,BorderLayout.NORTH);
         cp.add(jpn1,BorderLayout.CENTER);
+
 
         score.setBackground(new Color(233,233,200));
         score.setOpaque(true);
@@ -91,17 +98,17 @@ public class gameFrame extends JFrame implements KeyListener{
             @Override
             public void actionPerformed(ActionEvent e) {
              min--;
-             time1.setText(Integer.toString(min));
+             time1.setText(Integer.toString(min)+"s");
             }
         });
 
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               ballX=ballX+speedx;
-               ballY=ballY+speedy;
+                ballX=ballX+speedx;
+                ballY=ballY+speedy;
                //撞到左右牆壁反彈
-                if(ballX<0||ballX>430){
+                if(ballX<0||ballX>435){
                     speedx=-speedx;
                 }
                 //判斷是否為輸，分別是超過球拍時、及球拍左右兩側、當時間到時也判斷為輸
@@ -109,8 +116,8 @@ public class gameFrame extends JFrame implements KeyListener{
                    judge=true;
                    timer.stop();
                    time2.stop();
-                   JOptionPane.showMessageDialog(gameFrame.this,"Your Lose" +"\n"+
-                           "所得分數:"+count+"\n"+"時間:"+min);
+                   JOptionPane.showMessageDialog(gameFrame.this,"Make persistent efforts." +"\n"+
+                           "Score:"+count+"\n"+"Time:"+(60-min)+"s");
                    gameFrame.this.dispose();
                    loginFrame lg = new loginFrame();
                    lg.setVisible(true);
@@ -124,7 +131,6 @@ public class gameFrame extends JFrame implements KeyListener{
                   }
                   speedy=-speedy;
                }
-
                jlb.setLocation(ballX,ballY);
                switch (min){
                    case 55:
@@ -135,11 +141,16 @@ public class gameFrame extends JFrame implements KeyListener{
         });
 
 
+
+
+
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 timer.start();
                 time2.start();
+                start.setEnabled(false);
+                exit.setEnabled(false);
 
             }
         });
@@ -152,7 +163,6 @@ public class gameFrame extends JFrame implements KeyListener{
 
     }
     public void keyPressed(KeyEvent ke){
-        System.out.println(ke.getKeyCode());
         switch (ke.getKeyCode()){
             case 37://left
                 if(jlbplay_x>0){
@@ -174,7 +184,10 @@ public class gameFrame extends JFrame implements KeyListener{
     public void keyTyped(KeyEvent ke){
 
     }
-    public void getCount(int n){
-        n=count;
+    public String getCount(){
+
+        return n;
     }
+
+
 }

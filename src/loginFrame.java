@@ -13,12 +13,14 @@ public class loginFrame extends JFrame {
     private JButton logon = new JButton("Start");
     private JButton score = new JButton("Score");
     private JButton exit = new JButton("Exit");
-
-    private gameFrame gf=new gameFrame();
-
+    scoreFrame sf ;
+    private gameFrame gf ;
 
     public loginFrame(){
+        gf=new gameFrame();
+        sf=new scoreFrame(gf);
         init();
+
     }
     public void init(){
        cp=this.getContentPane();
@@ -26,6 +28,7 @@ public class loginFrame extends JFrame {
        this.setBounds(100,150,300,500);
        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
        cp.setBackground(new Color(255,150,100));
+       this.setResizable(false);
 
        logon.setBounds(100,100,100,50);
        score.setBounds(100,200,100,50);
@@ -49,7 +52,7 @@ public class loginFrame extends JFrame {
        score.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               scoreFrame sf =new scoreFrame(gf);
+//               scoreFrame sf =new scoreFrame(gf);
                sf.setVisible(true);
            }
        });
