@@ -9,12 +9,9 @@ public class scoreFrame extends JFrame {
     private JButton clear = new JButton("Clear");
     private JButton exit = new JButton("Exit");
     private JPanel jpnS = new JPanel(new GridLayout(1, 2, 3, 3));
-    private JPanel jpnC = new JPanel(new GridLayout(8, 1, 3, 3));
+    private JPanel jpnC = new JPanel(new GridLayout(5, 1, 3, 3));
     private JLabel rank[] = new JLabel[5];
-    private int score[]=new int[5];
-    private int n;
-
-
+    private static int score[]=new int[5];
 
     public scoreFrame(gameFrame gf) {
         gameFram = gf;
@@ -32,12 +29,13 @@ public class scoreFrame extends JFrame {
         jpnS.add(clear);
         jpnS.add(exit);
 
-        String n=gameFram.getCount();
+
 
 
         for (int i = 0; i < 5; i++) {
             rank[i] = new JLabel();
-            rank[i].setText( (i + 1)+"st" + ":");
+            rank[i].setText( "Rank"+(i + 1) + ":"+score[i]);
+            rank[i].setFont(new Font(null,Font.PLAIN,40));
             jpnC.add(rank[i]);
         };
         exit.addActionListener(new ActionListener() {
@@ -46,8 +44,28 @@ public class scoreFrame extends JFrame {
                 scoreFrame.this.dispose();
             }
         });
+        this.repaint();
     }
+    public static void addScore(int scoreval){
+        if(scoreval > score[score.length-1]){
+            score[score.length-1] =scoreval;
+        }
+        for(int i =0;i<score.length;i++){
+            for(int j =i+1;j<score.length;j++){
+                if(score[j]>score[i]){
+                   int tmp=score[j];
+                       score[j]=score[i];
+                       score[i]=tmp;
+                }
+            }
+        }
 
+
+
+
+
+
+    }
 //    public void setCount(int str){
 //        int n =0;
 //         score[n]=str;

@@ -14,7 +14,7 @@ public class gameFrame extends JFrame implements KeyListener{
     private JLabel score = new JLabel("Score:");
     private JLabel score1 = new JLabel(Integer.toString(count));
     private JLabel time = new JLabel("Time:");
-    private JLabel time1 = new JLabel(Integer.toString(min));
+    private JLabel time1 = new JLabel(Integer.toString(min)+"s");
     private JButton start = new JButton("Start");
     private JButton exit = new JButton("Exit");
     private JPanel jpn = new JPanel(new GridLayout(1,8,2,2));
@@ -35,11 +35,10 @@ public class gameFrame extends JFrame implements KeyListener{
     private int speedx=(int)(rate*speedy);
     private int ballX=rand.nextInt(400);
     private int ballY=1;
-    private scoreFrame scoreFram;
+    private int n=0;
 
 
     public gameFrame(){
-     //   scoreFram=sf;
         init();
     }
     public void init(){
@@ -99,6 +98,7 @@ public class gameFrame extends JFrame implements KeyListener{
             public void actionPerformed(ActionEvent e) {
              min--;
              time1.setText(Integer.toString(min)+"s");
+
             }
         });
 
@@ -118,7 +118,10 @@ public class gameFrame extends JFrame implements KeyListener{
                    time2.stop();
                    JOptionPane.showMessageDialog(gameFrame.this,"Make persistent efforts." +"\n"+
                            "Score:"+count+"\n"+"Time:"+(60-min)+"s");
-                   gameFrame.this.dispose();
+                   n=count;
+                   System.out.println("aaaaaa" +n);
+                   scoreFrame.addScore(n);
+                   gameFrame.this.setVisible(false);
                    loginFrame lg = new loginFrame();
                    lg.setVisible(true);
                }
@@ -139,9 +142,6 @@ public class gameFrame extends JFrame implements KeyListener{
 
             }
         });
-
-
-
 
 
         start.addActionListener(new ActionListener() {
@@ -184,9 +184,8 @@ public class gameFrame extends JFrame implements KeyListener{
     public void keyTyped(KeyEvent ke){
 
     }
-    public String getCount(){
-
-        return n;
+    public int getCount(){
+        return n ;
     }
 
 
