@@ -6,12 +6,14 @@ import java.awt.event.ActionListener;
 public class scoreFrame extends JFrame {
     private Container cp;
     private gameFrame gameFram;
-    private JButton clear = new JButton("Clear");
+    private JLabel space = new JLabel();
     private JButton exit = new JButton("Exit");
+    private JLabel space1 = new JLabel();
     private JPanel jpnS = new JPanel(new GridLayout(1, 2, 3, 3));
     private JPanel jpnC = new JPanel(new GridLayout(5, 1, 3, 3));
     private JLabel rank[] = new JLabel[5];
     private static int score[]=new int[5];
+    private boolean flag=true;
 
     public scoreFrame(gameFrame gf) {
         gameFram = gf;
@@ -21,14 +23,14 @@ public class scoreFrame extends JFrame {
     private void init() {
         cp = this.getContentPane();
         this.setResizable(false);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(410, 150, 250, 400);
         this.setTitle("Rank");
         cp.add(jpnC, BorderLayout.CENTER);
         cp.add(jpnS, BorderLayout.SOUTH);
-        jpnS.add(clear);
+        jpnS.add(space);
         jpnS.add(exit);
-
+        jpnS.add(space1);
 
 
 
@@ -38,6 +40,17 @@ public class scoreFrame extends JFrame {
             rank[i].setFont(new Font(null,Font.PLAIN,40));
             jpnC.add(rank[i]);
         };
+        for (int i =0;i<5;i++){
+            if(flag==true) {
+                rank[i].setBackground(new Color(233, 66, 222));
+                rank[i].setOpaque(true);
+                flag=false;
+            }else {
+                rank[i].setBackground(new Color(80, 166, 244));
+                rank[i].setOpaque(true);
+                flag=true;
+            }
+        }
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,12 +77,6 @@ public class scoreFrame extends JFrame {
 
 
 
-
     }
-//    public void setCount(int str){
-//        int n =0;
-//         score[n]=str;
-//         n++;
-//    }
     }
 

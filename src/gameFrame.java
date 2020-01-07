@@ -30,7 +30,7 @@ public class gameFrame extends JFrame implements KeyListener{
     private int jlbplay_y = 700;
 
     private int bellSize=100;
-    private int speedy=50;
+    private int speedy=50;//垂直速度
     private double rate=1;
     private int speedx=(int)(rate*speedy);
     private int ballX=rand.nextInt(400);
@@ -46,7 +46,7 @@ public class gameFrame extends JFrame implements KeyListener{
         this.pack();
         this.setLayout(new BorderLayout(3,3));
         this.setBounds(100,100,600,800);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setTitle("Pinball Game");
 
@@ -112,14 +112,13 @@ public class gameFrame extends JFrame implements KeyListener{
                     speedx=-speedx;
                 }
                 //判斷是否為輸，分別是超過球拍時、及球拍左右兩側、當時間到時也判斷為輸
-               if(ballY>=jlbplay_y-5&&(ballX < jlbplay_x || ballX > jlbplay_x+(jlbplay.getWidth()-5))||min==0){
+               if(ballY>jlbplay_y&&(ballX<jlbplay_x|| ballX > jlbplay_x+(jlbplay.getWidth()+5))||min==0){
                    judge=true;
                    timer.stop();
                    time2.stop();
                    JOptionPane.showMessageDialog(gameFrame.this,"Make persistent efforts." +"\n"+
                            "Score:"+count+"\n"+"Time:"+(60-min)+"s");
                    n=count;
-                   System.out.println("aaaaaa" +n);
                    scoreFrame.addScore(n);
                    gameFrame.this.setVisible(false);
                    loginFrame lg = new loginFrame();
@@ -135,13 +134,10 @@ public class gameFrame extends JFrame implements KeyListener{
                   speedy=-speedy;
                }
                jlb.setLocation(ballX,ballY);
-               switch (min){
-                   case 55:
-                       break;
-               }
-
             }
         });
+
+
 
 
         start.addActionListener(new ActionListener() {
@@ -157,7 +153,10 @@ public class gameFrame extends JFrame implements KeyListener{
         exit.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.exit(0);
+                        gameFrame.this.setVisible(false);
+                        loginFrame log = new loginFrame();
+                        log.setVisible(true);
+
                     }
                 });
 

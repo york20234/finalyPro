@@ -61,7 +61,5 @@ public class loginFrame extends JFrame {
                System.exit(0);
            }
        });
-
-
     }
 }
